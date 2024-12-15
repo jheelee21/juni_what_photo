@@ -1,5 +1,9 @@
+document.addEventListener("DOMContentLoaded", () => {
+    fetchJSONData();
+});
+
 function fetchJSONData() {
-    fetch("./photos.json")
+    fetch("photos.json")
         .then((res) => {
             return res.json();
         })
@@ -39,10 +43,6 @@ function createPanelElement(data) {
         container.appendChild(newDiv);
     });
 }
-
-document.addEventListener("DOMContentLoaded", () => {
-    fetchJSONData();
-});
 
 function removeActiveClasses(container) {
     const panels = container.querySelectorAll(".panel");

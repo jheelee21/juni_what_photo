@@ -1,0 +1,32 @@
+[
+    {
+        "id": 1,
+        "src": "photo/DSCF1281.JPG",
+        "alt": "photo 1",
+        "title": "Gyeongju"
+    },
+    {
+        "id": 2,
+        "src": "photo/DSCF3756.JPG",
+        "alt": "photo 2",
+        "title": "Brooklyn"
+    },
+    {
+        "id": 3,
+        "src": "photo/D41687B2-6F72-4936-BCA0-922CB22DA047_1_105_c.jpeg",
+        "alt": "photo 3",
+        "title": "Miami"
+    },
+    {
+        "id": 4,
+        "src": "photo/4760FA7C-E70C-4DA1-A59C-E12BB963AB3F_1_105_c.jpeg",
+        "alt": "photo 4",
+        "title": "New York"
+    },
+    {
+        "id": 5,
+        "src": "photo/9BDF6870-7B27-43F1-B45A-F79C7CC5C1A2_1_105_c.jpeg",
+        "alt": "photo 5",
+        "title": "Toronto"
+    }
+]

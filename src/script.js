@@ -24,8 +24,12 @@ function createPanelElement(data) {
         newDiv.style.backgroundImage = `url(${photo.src})`;
 
         const h1 = document.createElement("h1");
-        h1.textContent = photo.title;
+        h1.textContent = photo.location;
         newDiv.appendChild(h1);
+
+        const h2 = document.createElement("h2");
+        h2.textContent = photo.date;
+        newDiv.appendChild(h2);
 
         newDiv.addEventListener("click", () => {
             removeActiveClasses(container);
@@ -46,3 +50,21 @@ function removeActiveClasses(container) {
         panel.classList.remove("active");
     });
 };
+
+const panels = document.querySelectorAll(".panel.active");
+
+panels.forEach(panel => {
+    panel.addEventListener("click", openGallery);
+});
+
+function openGallery(event) {
+    const panel = event.currentTarget;
+
+    panel.classList.toggle("active");
+
+    if (panel.classList.contains("active")) {
+        console.log("open gallery for", panel);
+    } else {
+        console.log("panel is not active");
+    }
+}

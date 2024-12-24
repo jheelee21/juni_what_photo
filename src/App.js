@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import Panel from './components/Panel';
 import Logo from './components/Logo';
+import HomePage from './components/HomePage';
 import './App.css';
 
-function App() {
+function App({}) {
   const [photos, setPhotos] = useState([]);
   const [activePanel, setActivePanel] = useState(null);
 
@@ -19,19 +19,7 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <div className="container">
-        {photos.map(photo => (
-          <Panel
-            key={photo.id}
-            photo={photo}
-            isActive={photo.id === activePanel}
-            onClick={() => handlePanelClick(photo.id)}
-          />
-        ))}
-      </div>
-      <Logo />
-    </div>
+    <HomePage />
   );
 }
 

@@ -1,20 +1,20 @@
-import mongoose from 'mongoose';
+import dotenv from 'dotenv';
 import { MongoClient, ServerApiVersion } from 'mongodb';
 import express from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
-import dotenv from 'dotenv';
 import camera from './models/camera.js';
 
 dotenv.config();
 
 const app = express();
+const PORT = process.env.PORT || 3001;
 
 // Middleware
 app.use(cors());
 app.use(express.json());
 
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
+// Create a MongoClient with a MongoClientOptions object
 const mongodb_client = new MongoClient(process.env.MONGODB_URI, {
   serverApi: {
     version: ServerApiVersion.v1,
@@ -23,26 +23,30 @@ const mongodb_client = new MongoClient(process.env.MONGODB_URI, {
   }
 });
 
-async function updateDatabase(data) {
-  data.save().then(result => {
-    console.log("data saved")
-  })
-}
-
-async function mongodb_run() {
+// Connect to MongoDB and insert cameras
+async function createCameras() {
   try {
-    // Connect the client to the server	(optional starting in v4.7)
     await mongodb_client.connect();
-    // Send a ping to confirm a successful connection
-    await mongodb_client.db("admin").command({ ping: 1 });
-    console.log("Pinged your deployment. You successfully connected to MongoDB!");
-
-    await updateDatabase(camera);
-
+    console.log("Connected to MongoDB");
+    
+    const db = mongodb_client.db(process.env.MONGODB_NAME);
+    const collection = db.collection("cameras");
+    
+    // Insert the camera data
+    const result = await collection.insertMany(camera);
+    console.log(`${result.insertedCount} cameras were inserted`);
+    
+  } catch (error) {
+    console.error("Error:", error);
   } finally {
-    // Ensures that the client will close when you finish/error
     await mongodb_client.close();
   }
 }
 
-mongodb_run().catch(console.dir);
+// Start server and create cameras
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+  createCameras().catch(console.error);
+});
+
+export default app;

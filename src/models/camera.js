@@ -25,3 +25,5 @@ const camera = new Camera([
         model: "Nikon FM2"
     }
 ]);
+
+export default camera;

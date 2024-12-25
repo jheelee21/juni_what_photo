@@ -1,18 +1,17 @@
-import dotenv from 'dotenv';
-import { MongoClient, ServerApiVersion } from 'mongodb';
 import express from 'express';
 import cors from 'cors';
-import mongoose from 'mongoose';
-import camera from './models/camera.js';
+import dotenv from 'dotenv';
+import { MongoClient, ServerApiVersion } from 'mongodb';
+import cameraRoutes from './routes/cameraRoute.js';
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// Middleware
 app.use(cors());
 app.use(express.json());
+app.use('/cameras', cameras);
 
 // Create a MongoClient with a MongoClientOptions object
 const mongodb_client = new MongoClient(process.env.MONGODB_URI, {

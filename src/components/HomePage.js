@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Panel from './Panel';
 import Logo from './Logo';
+import UploadButton from './UploadButton';
 
 function HomePage() {
   const [photos, setPhotos] = useState([]);
@@ -30,6 +31,7 @@ function HomePage() {
             ))}
         </div>
       <Logo />
+      <UploadButton />
     </div>
   );
 }

@@ -1,65 +1,46 @@
 import express from 'express';
-import db from '../db/mongodb.js';
-import Camera from './schemas/cameraSchema.js';
-
-const camera = new Camera([
-    {
-        cameraId: 1,
-        type: "Digital",
-        model: "Nikon Coolpix S230"
-    },
-    {
-        cameraId: 2,
-        type: "DSLR",
-        model: "Fujifilm FinePix AV110"
-    },
-    {
-        cameraId: 3,
-        type: "Film",
-        model: "Nikon FM2"
-    }
-]);
+import { client } from '../db/mongodb.js';
 
 const router = express.Router();
 
+// GET all cameras
 router.get('/', async (req, res) => {
-  const results = await db.collection('cameras').find().toArray();
-  res.send(results).status(200);
-});
-
-router.get('/:id', async (req, res) => {
-    const collection = db.collection('cameras');
-    const query = { cameraId: req.params.id };
-    const result = await collection.findOne(query);
-
-    if (!result) {
-        res.sendStatus(404);
-    } else{
-        res.send(result).status(200);
+    try {
+        const db = client.db(process.env.MONGODB_NAME);
+        const collection = db.collection("cameras");
+        
+        const cameras = await collection.find({}).toArray();
+        res.status(200).json({ 
+            success: true, 
+            data: cameras 
+        });
+    } catch (error) {
+        res.status(500).json({ 
+            success: false, 
+            message: 'Error fetching cameras',
+            error: error.message 
+        });
     }
 });
 
+// POST new camera
 router.post('/', async (req, res) => {
     try {
-        const collection = db.collection('cameras');
-        const result = await collection.insertMany(camera);
-        res.send(result).status(204);
-    } catch (e) {
-        console.error(e);
-        res.sendStatus(500).send("Error adding record");
-    }
-});
-
-router.delete('/:id', async (req, res) => {
-    try {
-        const query = { cameraId: req.params.id };
-        const collection = db.collection('cameras');
-        const result = await collection.deleteOne(query);
-
-        res.send(result).status(200);
-    } catch (e) {
-        console.error(e);
-        res.sendStatus(500).send("Error deleting record");
+        const db = client.db(process.env.MONGODB_NAME);
+        const collection = db.collection("cameras");
+        
+        const result = await collection.insertOne(req.body);
+        res.status(201).json({ 
+            success: true, 
+            message: 'Camera added successfully',
+            data: result 
+        });
+    } catch (error) {
+        res.status(500).json({ 
+            success: false, 
+            message: 'Error adding camera',
+            error: error.message 
+        });
     }
 });
 

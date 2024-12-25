@@ -251,6 +251,31 @@ body {
   font-size: 24px;
 }
 
+.camera-list {
+  margin-top: 20px;
+  width: 100%;
+  max-width: 300px;
+}
+
+.camera-list h2 {
+  color: #eee;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.camera-list ul {
+  list-style: none;
+  padding: 0;
+}
+
+.camera-list li {
+  color: #eee;
+  padding: 8px;
+  margin: 5px 0;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
 label{
   font-size: 20px;
 }
